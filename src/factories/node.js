@@ -1,8 +1,8 @@
 
 export default function nodes(inputValue) {
     const nodeValue = inputValue;
-    let nodeLeft;
-    let nodeRight;
+    const nodeLeft = null;
+    const nodeRight = null;
 
     return { nodeValue, nodeLeft, nodeRight };
 }

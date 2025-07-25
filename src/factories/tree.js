@@ -46,7 +46,7 @@ export default function binaryTree() {
         root = buildTree(tempArr, 0, tempArr.length - 1);
     }
 
-    // returns the root attribute
+    // returns the root node of our entire binary search tree
     function getRoot() {
         return root;
     }
@@ -73,5 +73,34 @@ export default function binaryTree() {
         }
     };
 
-    return { processArray, getRoot, prettyPrint };
+    // inserts a node into the correct place within the binary search tree
+    function insert(inputNode, currentRoot = root) {
+        /*
+        when inserting into a binary search tree with a new value/node, the main takeaway is 
+        that the inserted node is always going to be a leaf of some other node. All we need to do 
+        is traverse the tree traditionally (recursively) and keep going until we reach a null (a leaf location/empty location)
+        */
+        // stop whenever we get to an empty node. Return the input node as the new node to put
+        if (currentRoot === null) {;
+            return inputNode;
+        }
+        console.log(currentRoot);
+        // start at the root and recursively travel down the tree based on if the inputNode's value is greater than or less than our root value
+
+        // if the input node's value is greater than our current root value, then go right
+        if (currentRoot.nodeValue <= inputNode.nodeValue) {
+            currentRoot.nodeRight = insert(inputNode, currentRoot.nodeRight);
+        } else {
+            // otherwise, go left
+            currentRoot.nodeLeft = insert(inputNode, currentRoot.nodeLeft);
+        }
+
+        // if we are still traversing the tree, then return the currentRoot location to keep the tree together after recusion
+        return currentRoot;
+
+    }
+
+    // function deleteItem(value) {}
+
+    return { processArray, getRoot, prettyPrint, insert };
 }
