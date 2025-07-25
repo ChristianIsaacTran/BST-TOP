@@ -79,12 +79,12 @@ export default function binaryTree() {
         when inserting into a binary search tree with a new value/node, the main takeaway is 
         that the inserted node is always going to be a leaf of some other node. All we need to do 
         is traverse the tree traditionally (recursively) and keep going until we reach a null (a leaf location/empty location)
+        note: since this is not an AVL tree, I do NOT have to rebalance it after inserting/deleting
         */
         // stop whenever we get to an empty node. Return the input node as the new node to put
-        if (currentRoot === null) {;
+        if (currentRoot === null) {
             return inputNode;
         }
-        console.log(currentRoot);
         // start at the root and recursively travel down the tree based on if the inputNode's value is greater than or less than our root value
 
         // if the input node's value is greater than our current root value, then go right
@@ -97,10 +97,79 @@ export default function binaryTree() {
 
         // if we are still traversing the tree, then return the currentRoot location to keep the tree together after recusion
         return currentRoot;
-
     }
 
-    // function deleteItem(value) {}
+    // deletes a node from the binary search tree
+    function deleteItem(inputNode, currentRoot = root) {
+        /*
+        3 Scenarios to deleting an item in binary search tree:
+        1. delete a leaf node (a node with no children)
+        2. deleting a node with 1 child in it
+        3. deleteing a node with 2 children in it
+        */
 
-    return { processArray, getRoot, prettyPrint, insert };
+        // basecase: stop when we found the node we want to delete
+        if (inputNode.nodeValue === currentRoot.nodeValue) {
+            console.log("MATCH FOUND");
+            // scenario 1
+            if (
+                currentRoot.nodeLeft === null &&
+                currentRoot.nodeRight === null
+            ) {
+                return null;
+            } else if (
+                currentRoot.nodeLeft !== null &&
+                currentRoot.nodeRight === null
+            ) {
+                // scenario 2: if the left node is the child
+
+                return currentRoot.nodeLeft;
+            } else if (
+                currentRoot.nodeLeft === null &&
+                currentRoot.nodeRight !== null
+            ) {
+                // scenario 2: if the right node is the child
+                return currentRoot.nodeRight;
+            }
+            // scenario 3
+            const inorderSuccessor = findInorderSuccessor(currentRoot);
+            currentRoot.nodeValue = inorderSuccessor.nodeValue;
+            // if the inorder successor has a right child, then append it to the currentRoot
+            if(inorderSuccessor.nodeRight !== null) {
+                currentRoot.nodeRight = inorderSuccessor.nodeRight;
+            }
+            return currentRoot;
+        }
+
+        console.log(currentRoot);
+
+        // if the input node's value is greater than our current root value, then go right
+        if (currentRoot.nodeValue <= inputNode.nodeValue) {
+            currentRoot.nodeRight = deleteItem(
+                inputNode,
+                currentRoot.nodeRight,
+            );
+        } else {
+            // otherwise, go left
+            currentRoot.nodeLeft = deleteItem(inputNode, currentRoot.nodeLeft);
+        }
+
+        return currentRoot;
+    }
+
+    // finds the inorder successor of the binary search tree and returns the node
+    function findInorderSuccessor(currentNode) {
+        // traverse to the right subtree
+        let tempNode = currentNode.nodeRight;
+
+        // iterate until the leftmost node in the right subtree, that is going to be our lowest out of the right subtree.
+        while (tempNode !== null && tempNode.nodeLeft !== null) {
+            tempNode = tempNode.nodeLeft;
+        }  
+        
+
+        return tempNode;
+    }
+
+    return { processArray, getRoot, prettyPrint, insert, deleteItem };
 }
