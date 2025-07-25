@@ -55,3 +55,10 @@ find left side of the array middle (found middle of left side, its 2)
 
 and so on...
 
+# note to self after noticing: 
+During the insertion portion of the project, I was under the assumption that the 
+tree itself had to stay balanced after inserting which would fall into the category of 
+AVL tree logic, but when I rewatched and reread their examples that they gave, they are 
+just wanting the implementation of the operation themselves, not re-balancing the tree (yet).
+Focus on moving onto the deletion operation. Don't worry about keeping the tree balanced after the 
+operations. 

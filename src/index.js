@@ -5,14 +5,13 @@ import nodes from "./factories/node.js";
 
 const binaryTree1 = binaryTree();
 
-binaryTree1.processArray([7, 3, 5, 3, 9, 1, 5, 10, 2, 9, 8]);
+binaryTree1.processArray([10, 20, 30, 100, 500]);
 
 console.log(binaryTree1.getRoot());
 
 binaryTree1.prettyPrint(binaryTree1.getRoot());
 
-binaryTree1.insert(nodes(5));
-
+binaryTree1.insert(nodes(40));
 
 console.log(binaryTree1.getRoot());
 
