@@ -174,6 +174,12 @@ export default function binaryTree() {
     function find(givenValue, currentRoot = root) {
         let foundNode;
 
+        // if the node is not found, return null
+        if(currentRoot === null) {
+            console.log("node not found: find(). Returning null...");
+            return null;
+        }
+
         // basecase: stop when we found the node we want to delete
         if (givenValue === currentRoot.nodeValue) {
             console.log("MATCH FOUND");
@@ -187,6 +193,8 @@ export default function binaryTree() {
             // otherwise, go left
             foundNode = find(givenValue, currentRoot.nodeLeft);
         }
+
+        
 
         return foundNode;
     }
