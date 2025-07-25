@@ -18,3 +18,5 @@ binaryTree1.prettyPrint(binaryTree1.getRoot());
 binaryTree1.deleteItem(nodes(45));
 
 binaryTree1.prettyPrint(binaryTree1.getRoot());
+
+console.log(binaryTree1.find(10));

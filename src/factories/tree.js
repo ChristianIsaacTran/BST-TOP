@@ -135,7 +135,7 @@ export default function binaryTree() {
             const inorderSuccessor = findInorderSuccessor(currentRoot);
             currentRoot.nodeValue = inorderSuccessor.nodeValue;
             // if the inorder successor has a right child, then append it to the currentRoot
-            if(inorderSuccessor.nodeRight !== null) {
+            if (inorderSuccessor.nodeRight !== null) {
                 currentRoot.nodeRight = inorderSuccessor.nodeRight;
             }
             return currentRoot;
@@ -165,11 +165,31 @@ export default function binaryTree() {
         // iterate until the leftmost node in the right subtree, that is going to be our lowest out of the right subtree.
         while (tempNode !== null && tempNode.nodeLeft !== null) {
             tempNode = tempNode.nodeLeft;
-        }  
-        
+        }
 
         return tempNode;
     }
 
-    return { processArray, getRoot, prettyPrint, insert, deleteItem };
+    // find(value) returns a node with the given value
+    function find(givenValue, currentRoot = root) {
+        let foundNode;
+
+        // basecase: stop when we found the node we want to delete
+        if (givenValue === currentRoot.nodeValue) {
+            console.log("MATCH FOUND");
+            return currentRoot;
+        }
+
+        // if the value is greater than our current root value, then go right
+        if (currentRoot.nodeValue <= givenValue) {
+            foundNode = find(givenValue, currentRoot.nodeRight);
+        } else {
+            // otherwise, go left
+            foundNode = find(givenValue, currentRoot.nodeLeft);
+        }
+
+        return foundNode;
+    }
+
+    return { processArray, getRoot, prettyPrint, insert, deleteItem, find };
 }
