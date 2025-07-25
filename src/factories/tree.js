@@ -1,3 +1,4 @@
+/* eslint-disable no-ternary */
 /* eslint-disable no-magic-numbers */
 import nodes from "./node.js";
 
@@ -20,10 +21,9 @@ export default function binaryTree() {
         // make the root the middle of the current Arr
         const tempRoot = nodes(sortedArr[middlePoint]);
 
-        
         // calculate the middles and roots of the left and right nodes recursively
         // make left subtree
-        tempRoot.nodeLeft = buildTree(sortedArr, start, middlePoint-1);
+        tempRoot.nodeLeft = buildTree(sortedArr, start, middlePoint - 1);
 
         // make the right subtree
         tempRoot.nodeRight = buildTree(sortedArr, middlePoint + 1, end);
@@ -51,5 +51,27 @@ export default function binaryTree() {
         return root;
     }
 
-    return { processArray, getRoot };
+    // function from the odin project to visualize the binary search tree
+    const prettyPrint = (node, prefix = "", isLeft = true) => {
+        if (node === null) {
+            return;
+        }
+        if (node.nodeRight !== null) {
+            prettyPrint(
+                node.nodeRight,
+                `${prefix}${isLeft ? "│   " : "    "}`,
+                false,
+            );
+        }
+        console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.nodeValue}`);
+        if (node.nodeLeft !== null) {
+            prettyPrint(
+                node.nodeLeft,
+                `${prefix}${isLeft ? "    " : "│   "}`,
+                true,
+            );
+        }
+    };
+
+    return { processArray, getRoot, prettyPrint };
 }
