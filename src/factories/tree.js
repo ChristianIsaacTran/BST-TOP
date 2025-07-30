@@ -215,26 +215,112 @@ export default function binaryTree() {
             // if the current node has children, visit the current node and enqueue children.
             queue.push(root);
 
-            while(queue.length > 0) {
+            while (queue.length > 0) {
                 // get the first node from the queue (FIFO)
-                const curr = queue[0]; 
-                
+                const curr = queue[0];
+
                 // use callback on the currentNode we want to process
                 callbackFunc(curr);
 
                 // enqueue children if it exists
-                if(curr.nodeLeft !== null) {
+                if (curr.nodeLeft !== null) {
                     queue.push(curr.nodeLeft);
                 }
-                
-                if(curr.nodeRight !== null) {
+
+                if (curr.nodeRight !== null) {
                     queue.push(curr.nodeRight);
                 }
 
                 // remove node from queue after processing
                 queue.shift();
-
             }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // performs DFS in all 3 types (inorder, preorder, postorder)
+    /*
+    note: remember that preorder, inorder, and postorder refer to the 
+    order in which the root (current root/node that we are on) gets processed 
+    during the traversal. Left node traditionally goes before right node, so the orders are:
+
+    preorder: root, left, right
+
+    inorder: left, root, right
+
+    postorder: left, right, root
+
+    pretty much going to be the same algorithm but with the change in steps.
+    */
+    function inOrderForEach(callbackFunc, currentRoot = root) {
+        try {
+            if (callbackFunc === null || callbackFunc === undefined) {
+                throw new Error(
+                    "Callback not provided. Callback function is required in function call.",
+                );
+            }
+            // basecase: if the current node is null, stop recursing
+            if (currentRoot === null) {
+                return;
+            }
+
+            // inorder: go left, then process the node, then go right
+            inOrderForEach(callbackFunc, currentRoot.nodeLeft);
+
+            callbackFunc(currentRoot);
+
+            inOrderForEach(callbackFunc, currentRoot.nodeRight);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function preOrderForEach(callbackFunc, currentRoot = root) {
+        try {
+            if (callbackFunc === null || callbackFunc === undefined) {
+                throw new Error(
+                    "Callback not provided. Callback function is required in function call.",
+                );
+            }
+
+            // basecase: if the current node is null, stop recursing
+            if (currentRoot === null) {
+                return;
+            }
+
+            // preorder: process the node, go left, go right
+
+            callbackFunc(currentRoot);
+
+            preOrderForEach(callbackFunc, currentRoot.nodeLeft);
+
+            preOrderForEach(callbackFunc, currentRoot.nodeRight);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function postOrderForEach(callbackFunc, currentRoot = root) {
+        try {
+            if (callbackFunc === null || callbackFunc === undefined) {
+                throw new Error(
+                    "Callback not provided. Callback function is required in function call.",
+                );
+            }
+
+            // basecase: if the current node is null, stop recursing
+            if (currentRoot === null) {
+                return;
+            }
+
+            // postorder: go left, go right, then process the node
+
+            postOrderForEach(callbackFunc, currentRoot.nodeLeft);
+
+            postOrderForEach(callbackFunc, currentRoot.nodeRight);
+            
+            callbackFunc(currentRoot);
         } catch (error) {
             console.log(error);
         }
@@ -248,5 +334,8 @@ export default function binaryTree() {
         deleteItem,
         find,
         levelOrderForEach,
+        inOrderForEach,
+        preOrderForEach,
+        postOrderForEach,
     };
 }

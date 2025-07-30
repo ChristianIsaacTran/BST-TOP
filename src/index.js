@@ -24,5 +24,20 @@ console.log(binaryTree1.find(20));
 console.log("\n\nstart of BFS: ---------");
 
 binaryTree1.levelOrderForEach((givenNode) => {
-    console.log(givenNode);
+    console.log(givenNode.nodeValue);
+});
+
+console.log("\n\nstart of DFS(Inorder): ---------");
+binaryTree1.inOrderForEach((givenNode) => {
+    console.log(givenNode.nodeValue);
+});
+
+console.log("\n\nstart of DFS(Preorder): ---------");
+binaryTree1.preOrderForEach((givenNode) => {
+    console.log(givenNode.nodeValue);
+});
+
+console.log("\n\nstart of DFS(Postorder): ---------");
+binaryTree1.postOrderForEach((givenNode) => {
+    console.log(givenNode.nodeValue);
 });
