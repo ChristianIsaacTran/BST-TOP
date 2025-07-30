@@ -5,6 +5,9 @@ import nodes from "./node.js";
 export default function binaryTree() {
     let root;
 
+    // boolean to determine if the tree is balanced
+    let balanced;
+
     /*
     takes in an array of data and turns it into a balanced binary tree full of nodes.
     It also says to explicitly sort the array and remove any duplicate values to ensure tree building is as even as possible.
@@ -44,6 +47,9 @@ export default function binaryTree() {
 
         // build the balanced binary search tree, and assign the final root node to our root variable
         root = buildTree(tempArr, 0, tempArr.length - 1);
+
+        // is balanced since we just made the binary tree fresh
+        balanced = true;
     }
 
     // returns the root node of our entire binary search tree
@@ -328,7 +334,7 @@ export default function binaryTree() {
     // returns the height of the found node with the value in it
     function height(givenValue, currentRoot = find(givenValue)) {
         // if the given value doesn't exist
-        if(find(givenValue) === null) {
+        if (find(givenValue) === null) {
             return null;
         }
 
@@ -344,9 +350,9 @@ export default function binaryTree() {
         const largestValue = Math.max(leftHeight, rightHeight) + 1;
 
         return largestValue;
-    } 
+    }
 
-    // returns the depth of the found node with the value in it 
+    // returns the depth of the found node with the value in it
     function depth(givenValue, currentRoot = root, currentDepth = 0) {
         let finalDepth;
 
@@ -363,15 +369,64 @@ export default function binaryTree() {
 
         // if the value is greater than our current root value, then go right
         if (currentRoot.nodeValue <= givenValue) {
-            finalDepth = depth(givenValue, currentRoot.nodeRight, currentDepth + 1);
+            finalDepth = depth(
+                givenValue,
+                currentRoot.nodeRight,
+                currentDepth + 1,
+            );
         } else {
             // otherwise, go left
-            finalDepth = depth(givenValue, currentRoot.nodeLeft, currentDepth + 1);
+            finalDepth = depth(
+                givenValue,
+                currentRoot.nodeLeft,
+                currentDepth + 1,
+            );
         }
 
         return finalDepth;
     }
 
+    // returns true or false depending on if the current binary search tree is balanced or not
+    function isBalanced() {
+        postOrderHelper((leftHeight, rightHeight) => {
+            if(Math.abs(leftHeight - rightHeight) > 1) {
+                balanced = false;
+            }
+        });
+        return balanced;
+    }
+
+    function postOrderHelper(callbackFunc, currentRoot = root) {
+        try {
+            // callback arguement check
+            if (callbackFunc === null || callbackFunc === undefined) {
+                throw new Error(
+                    "Callback not provided. Callback function is required in function call.",
+                );
+            }
+    
+            // basecase: if the current node is null, we return the height of 0
+            if (currentRoot === null) {
+                return 0;
+            }
+
+            // postorder: go left, go right, then process the node
+
+            const leftHeight = postOrderHelper(callbackFunc, currentRoot.nodeLeft);
+
+            const rightHeight = postOrderHelper(callbackFunc, currentRoot.nodeRight);
+
+            // check if the left and right height differences are higher than .
+            callbackFunc(leftHeight, rightHeight);
+
+            // return the height of the current node
+            return Math.max(leftHeight, rightHeight) + 1;
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return {
         processArray,
         getRoot,
@@ -384,6 +439,7 @@ export default function binaryTree() {
         preOrderForEach,
         postOrderForEach,
         height,
-        depth
+        depth,
+        isBalanced
     };
 }

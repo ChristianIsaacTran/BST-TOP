@@ -12,6 +12,10 @@ console.log(binaryTree1.getRoot());
 // binaryTree1.prettyPrint(binaryTree1.getRoot());
 
 // binaryTree1.insert(nodes(40));
+// binaryTree1.insert(nodes(40));
+// binaryTree1.insert(nodes(40));
+// binaryTree1.insert(nodes(40));
+// binaryTree1.insert(nodes(40));
 
 // binaryTree1.prettyPrint(binaryTree1.getRoot());
 
@@ -45,3 +49,5 @@ binaryTree1.postOrderForEach((givenNode) => {
 console.log(binaryTree1.height(30));
 
 console.log(binaryTree1.depth(35));
+
+console.log(binaryTree1.isBalanced());
