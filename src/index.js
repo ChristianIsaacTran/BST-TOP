@@ -41,3 +41,5 @@ console.log("\n\nstart of DFS(Postorder): ---------");
 binaryTree1.postOrderForEach((givenNode) => {
     console.log(givenNode.nodeValue);
 });
+
+console.log(binaryTree1.height(132131231));

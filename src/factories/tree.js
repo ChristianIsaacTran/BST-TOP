@@ -319,11 +319,32 @@ export default function binaryTree() {
             postOrderForEach(callbackFunc, currentRoot.nodeLeft);
 
             postOrderForEach(callbackFunc, currentRoot.nodeRight);
-            
+
             callbackFunc(currentRoot);
         } catch (error) {
             console.log(error);
         }
+    }
+
+    // returns the height of the found node with the value in it
+    function height(givenValue, currentRoot = find(givenValue)) {
+        // if the given value doesn't exist
+        if(find(givenValue) === null) {
+            return null;
+        }
+
+        // basecase: stop when we hit a null node (a node after leaf node). Return negative one to represent a null node
+        if (currentRoot === null) {
+            return -1;
+        }
+
+        // keep traversing the binary tree on both sides until we reach a leaf node, then we recurse up
+        const leftHeight = height(givenValue, currentRoot.nodeLeft);
+        const rightHeight = height(givenValue, currentRoot.nodeRight);
+
+        const largestValue = Math.max(leftHeight, rightHeight) + 1;
+
+        return largestValue;
     }
 
     return {
@@ -337,5 +358,6 @@ export default function binaryTree() {
         inOrderForEach,
         preOrderForEach,
         postOrderForEach,
+        height,
     };
 }
