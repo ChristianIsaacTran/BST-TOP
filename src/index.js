@@ -11,22 +11,21 @@ console.log(binaryTree1.getRoot());
 
 // binaryTree1.prettyPrint(binaryTree1.getRoot());
 
-binaryTree1.insert(nodes(40));
-binaryTree1.insert(nodes(40));
-binaryTree1.insert(nodes(40));
-binaryTree1.insert(nodes(40));
-binaryTree1.insert(nodes(40));
+binaryTree1.insert(nodes(31));
+// binaryTree1.insert(nodes(40));
+// binaryTree1.insert(nodes(40));
+// binaryTree1.insert(nodes(40));
 
 // binaryTree1.prettyPrint(binaryTree1.getRoot());
 
-// binaryTree1.deleteItem(nodes(45));
+binaryTree1.deleteItem(nodes(35));
 
 binaryTree1.prettyPrint(binaryTree1.getRoot());
 
 console.log(binaryTree1.find(103312132));
 console.log(binaryTree1.find(20));
-console.log("\n\nstart of BFS: ---------");
 
+console.log("\n\nstart of BFS: ---------");
 binaryTree1.levelOrderForEach((givenNode) => {
     console.log(givenNode.nodeValue);
 });
@@ -46,9 +45,9 @@ binaryTree1.postOrderForEach((givenNode) => {
     console.log(givenNode.nodeValue);
 });
 
-console.log(binaryTree1.height(30));
+console.log(binaryTree1.height(31));
 
-console.log(binaryTree1.depth(35));
+console.log(binaryTree1.depth(45));
 
 console.log(binaryTree1.isBalanced());
 
