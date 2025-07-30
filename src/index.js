@@ -42,4 +42,6 @@ binaryTree1.postOrderForEach((givenNode) => {
     console.log(givenNode.nodeValue);
 });
 
-console.log(binaryTree1.height(132131231));
+console.log(binaryTree1.height(30));
+
+console.log(binaryTree1.depth(35));

@@ -182,7 +182,6 @@ export default function binaryTree() {
 
         // basecase: stop when we found the node we want to delete
         if (givenValue === currentRoot.nodeValue) {
-            console.log("MATCH FOUND");
             return currentRoot;
         }
 
@@ -345,6 +344,32 @@ export default function binaryTree() {
         const largestValue = Math.max(leftHeight, rightHeight) + 1;
 
         return largestValue;
+    } 
+
+    // returns the depth of the found node with the value in it 
+    function depth(givenValue, currentRoot = root, currentDepth = 0) {
+        let finalDepth;
+
+        // if the node is not found, return null
+        if (currentRoot === null) {
+            console.log("node not found: find(). Returning null...");
+            return null;
+        }
+
+        // basecase: stop when we found the node, return the depth
+        if (givenValue === currentRoot.nodeValue) {
+            return currentDepth;
+        }
+
+        // if the value is greater than our current root value, then go right
+        if (currentRoot.nodeValue <= givenValue) {
+            finalDepth = depth(givenValue, currentRoot.nodeRight, currentDepth + 1);
+        } else {
+            // otherwise, go left
+            finalDepth = depth(givenValue, currentRoot.nodeLeft, currentDepth + 1);
+        }
+
+        return finalDepth;
     }
 
     return {
@@ -359,5 +384,6 @@ export default function binaryTree() {
         preOrderForEach,
         postOrderForEach,
         height,
+        depth
     };
 }
