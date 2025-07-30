@@ -175,7 +175,7 @@ export default function binaryTree() {
         let foundNode;
 
         // if the node is not found, return null
-        if(currentRoot === null) {
+        if (currentRoot === null) {
             console.log("node not found: find(). Returning null...");
             return null;
         }
@@ -194,10 +194,59 @@ export default function binaryTree() {
             foundNode = find(givenValue, currentRoot.nodeLeft);
         }
 
-        
-
         return foundNode;
     }
 
-    return { processArray, getRoot, prettyPrint, insert, deleteItem, find };
+    // traverses the binary search tree in BFS style (breadth first level search)
+    function levelOrderForEach(callbackFunc) {
+        // design this like .forEach() where you pass a callback.
+        // callbackFunction in this case is used to process the current node we are on. Gives the user the choice on how to process the current node.
+        try {
+            if (callbackFunc === null || callbackFunc === undefined) {
+                throw new Error(
+                    "Callback not provided. Callback function is required in function call.",
+                );
+            }
+
+            // level order traversal (BFS) requires a queue
+            const queue = [];
+
+            // start with the root of the tree and traverse it's left and right children.
+            // if the current node has children, visit the current node and enqueue children.
+            queue.push(root);
+
+            while(queue.length > 0) {
+                // get the first node from the queue (FIFO)
+                const curr = queue[0]; 
+                
+                // use callback on the currentNode we want to process
+                callbackFunc(curr);
+
+                // enqueue children if it exists
+                if(curr.nodeLeft !== null) {
+                    queue.push(curr.nodeLeft);
+                }
+                
+                if(curr.nodeRight !== null) {
+                    queue.push(curr.nodeRight);
+                }
+
+                // remove node from queue after processing
+                queue.shift();
+
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return {
+        processArray,
+        getRoot,
+        prettyPrint,
+        insert,
+        deleteItem,
+        find,
+        levelOrderForEach,
+    };
 }
