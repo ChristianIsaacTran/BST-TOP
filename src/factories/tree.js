@@ -8,6 +8,9 @@ export default function binaryTree() {
     // boolean to determine if the tree is balanced
     let balanced;
 
+    // replacement array/temporary array if rebalance() is called
+    let rebalanceArr = [];
+
     /*
     takes in an array of data and turns it into a balanced binary tree full of nodes.
     It also says to explicitly sort the array and remove any duplicate values to ensure tree building is as even as possible.
@@ -427,6 +430,44 @@ export default function binaryTree() {
             console.log(error);
         }
     }
+
+    // rebalances the entire binary tree by traversing the tree to pass a new array back tot he buildTree function 
+    function rebalance() {
+        inOrderHelper((currentRoot) => {
+            rebalanceArr.push(currentRoot.nodeValue);
+        });
+
+        // after traversing inorder to get an inorder array, pass it to the process to remove duplicates and rebuild the tree and reassign the root node.
+        processArray(rebalanceArr);
+
+        // reset the array after making the new tree
+        rebalanceArr = [];
+    }
+    
+    function inOrderHelper(callbackFunc, currentRoot = root) {
+        try {
+            if (callbackFunc === null || callbackFunc === undefined) {
+                throw new Error(
+                    "Callback not provided. Callback function is required in function call.",
+                );
+            }
+            // basecase: if the current node is null, stop recursing
+            if (currentRoot === null) {
+                return;
+            }
+
+            // inorder: go left, then process the node, then go right
+            inOrderForEach(callbackFunc, currentRoot.nodeLeft);
+
+            callbackFunc(currentRoot);
+
+            inOrderForEach(callbackFunc, currentRoot.nodeRight);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    
     return {
         processArray,
         getRoot,
@@ -440,6 +481,7 @@ export default function binaryTree() {
         postOrderForEach,
         height,
         depth,
-        isBalanced
+        isBalanced,
+        rebalance
     };
 }
